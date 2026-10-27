@@ -1,0 +1,15 @@
+Context:
+Membrane water diffusivitiy is highly dependent on membrane water content due to structural changes and formation of water clusters in ionomer. 
+Therefore, a fitted function will be used to obtain the parameters for the model which should be the _build_hwang_spline in rfbmodel1D\cells\methods\membrane_water_diffusivity.py.
+
+To fit these parameters, the water content diffusivity is being fitted to experimental data for membranes equilibrated with liquid vapor and dry N2 in each side.
+
+The experimental data was extracted from DRY_LS_desorption for the last time (steady state).
+
+So in rfbmodel1D\cells\methods\membrane_water_diffusivity.py im trying to fit these parameters assuming a mass transfer coefficient for the desorption side between 10^{-5} and 10^{-7}
+After fitting the diffusivity, scripts\Experimental\water_fit_sorption.py is used to see if the mass transfer coefficient changes or not.
+
+Objective:
+- Make sure that the diffusivity function used in scripts\functions\membrane_model.py (the one for the fitting) is the same as the hwang_spline.
+- Make this iteration process easier, for now, after fitting the diffusivity, i have to change manually the parameters in rfbmodel1D\parameters\params.py, same for the mass transfer coefficient.
+- Make the code as simple and readable for a human as posible. Nothing fancy.

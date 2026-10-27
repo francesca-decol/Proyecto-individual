@@ -1,0 +1,53 @@
+{
+  "test": 12,
+  "conditions": {
+    "soc": 0.5,
+    "T_C": 40.0,
+    "Q_v_ml_min": 20.0
+  },
+  "elapsed_s": 23836.03904247284,
+  "nfev": 704,
+  "nit": 10,
+  "success": false,
+  "message": "Maximum number of iterations has been exceeded.",
+  "mse": 0.0006121986501734463,
+  "params": {
+    "k_vw_sorp": 1.3619719133390035e-05,
+    "k_lw_sorp": 0.0015596626970378422,
+    "S_desorp": 6.984660783996129,
+    "k_ca": 7.056296194865432e-05,
+    "R_extra (\u03a9\u00b7cm\u00b2)": 0.020783606348456045
+  },
+  "log_bounds": {
+    "k_vw_sorp": [
+      -6.0,
+      -3.0
+    ],
+    "k_lw_sorp": [
+      -5.0,
+      -2.0457574905606752
+    ],
+    "S_desorp": [
+      0.0,
+      1.0
+    ],
+    "k_ca": [
+      -5.0,
+      -2.0457574905606752
+    ]
+  },
+  "settings": {
+    "maxiter": 10,
+    "popsize": 15,
+    "seed": 42,
+    "workers": 10,
+    "stride_charge": 1,
+    "stride_discharge": 1,
+    "tf": 1800,
+    "rtol": 1e-05,
+    "sf_D": 1,
+    "vanadium_uptake": false,
+    "r_extra_max_ohmcm2": 0.378676471,
+    "point_weights": {}
+  }
+}

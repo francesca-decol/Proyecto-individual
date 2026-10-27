@@ -1,0 +1,99 @@
+{
+  "parameter": "F_y",
+  "F_y_optimal": 10.019990056258525,
+  "mse": 0.0001400789066355817,
+  "rmse": 0.011835493510436381,
+  "bounds": [
+    10,
+    60
+  ],
+  "tests": [
+    1,
+    4,
+    7,
+    10,
+    13,
+    18,
+    21,
+    24,
+    27
+  ],
+  "k_ca": 9.727111566490432e-10,
+  "global_fit_source": "global_k_ca_fit_20260821_104300.json",
+  "elapsed_s": 1945.5906386375427,
+  "n_func_evals": 16,
+  "per_test": {
+    "1": {
+      "E_exp_charge": 1.063366337,
+      "E_sim_charge": 1.081844577129999,
+      "error_charge": 0.01847824012999899,
+      "E_exp_discharge": 1.03960396,
+      "E_sim_discharge": 1.0570475642335642,
+      "error_discharge": 0.01744360423356417
+    },
+    "4": {
+      "E_exp_charge": 1.06039604,
+      "E_sim_charge": 1.0836365899864973,
+      "error_charge": 0.02324054998649716,
+      "E_exp_discharge": 1.045544554,
+      "E_sim_discharge": 1.059274449915385,
+      "error_discharge": 0.013729895915385093
+    },
+    "7": {
+      "E_exp_charge": 1.073195876,
+      "E_sim_charge": 1.0861336888892268,
+      "error_charge": 0.012937812889226796,
+      "E_exp_discharge": 1.045360825,
+      "E_sim_discharge": 1.0565922162907457,
+      "error_discharge": 0.011231391290745796
+    },
+    "10": {
+      "E_exp_charge": 1.131428571,
+      "E_sim_charge": 1.1378816659592847,
+      "error_charge": 0.0064530949592847,
+      "E_exp_discharge": 1.114285714,
+      "E_sim_discharge": 1.1173159983087035,
+      "error_discharge": 0.003030284308703557
+    },
+    "13": {
+      "E_exp_charge": 1.125,
+      "E_sim_charge": 1.1381563376498829,
+      "error_charge": 0.013156337649882888,
+      "E_exp_discharge": 1.104807692,
+      "E_sim_discharge": 1.1152114334648073,
+      "error_discharge": 0.01040374146480727
+    },
+    "18": {
+      "E_exp_charge": 1.121052632,
+      "E_sim_charge": 1.1361459472517499,
+      "error_charge": 0.01509331525174984,
+      "E_exp_discharge": 1.121052632,
+      "E_sim_discharge": 1.1278528338918827,
+      "error_discharge": 0.0068002018918826845
+    },
+    "21": {
+      "E_exp_charge": 1.188461538,
+      "E_sim_charge": 1.1955611631175158,
+      "error_charge": 0.007099625117515718,
+      "E_exp_discharge": 1.176923077,
+      "E_sim_discharge": 1.1809389003736082,
+      "error_discharge": 0.004015823373608063
+    },
+    "24": {
+      "E_exp_charge": 1.185714286,
+      "E_sim_charge": 1.196260707456868,
+      "error_charge": 0.010546421456868016,
+      "E_exp_discharge": 1.142857143,
+      "E_sim_discharge": 1.1462010165825878,
+      "error_discharge": 0.0033438735825876975
+    },
+    "27": {
+      "E_exp_charge": 1.188888889,
+      "E_sim_charge": 1.1944543994964176,
+      "error_charge": 0.005565510496417625,
+      "E_exp_discharge": 1.130555556,
+      "E_sim_discharge": 1.125319781798958,
+      "error_discharge": -0.005235774201042043
+    }
+  }
+}
