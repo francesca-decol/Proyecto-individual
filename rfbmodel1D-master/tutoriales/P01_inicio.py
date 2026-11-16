@@ -41,14 +41,18 @@ def composicion_interfaz(cell):
       - update_vanadium() escribe c_V4*0,1229 y c_V5*0,0952 como condición de la membrana;
         dividiendo por esos coeficientes se recupera la concentración del último nodo del cátodo.
       - el H+ de la cara es la incógnita de acoplamiento c_H* (Vars.c_h, cátodo, derecha).
-      - el HSO4- NO está en cell.bc (su borde es Neumann 0). CeldaDonnan lo guarda en
-        self._c_HSO4_cara al evaluar update_kappa_io_cathode (último nodo del cátodo).
+      - el HSO4- NO está en cell.bc (su borde es Neumann 0). CeldaDonnan guarda el último nodo
+        del cátodo en self._nodo_cara al evaluar update_kappa_io_cathode.
+      - c_H_nodo: H+ del último nodo del cátodo (estado actual). Es el que usa factor_kappa:
+        c_H* en cell.bc lo escribe update_BC_cathode_membrane DESPUÉS de update_kappa_io_m,
+        así que dentro del residuo trae el valor de la evaluación anterior (vale 0 en la primera).
     """
     c_V4 = cell.bc[Vars.c_v4]["membrane"]["left"].value / 0.1229
     c_V5 = cell.bc[Vars.c_v5]["membrane"]["left"].value / 0.0952
     c_H  = cell.bc[Vars.c_h]["cathode"]["right"].value
-    c_HSO4 = getattr(cell, "_c_HSO4_cara", np.nan)
-    return {"c_V4": c_V4, "c_V5": c_V5, "c_H": c_H, "c_HSO4": c_HSO4}
+    nodo = getattr(cell, "_nodo_cara", {"c_H": np.nan, "c_HSO4": np.nan})
+    return {"c_V4": c_V4, "c_V5": c_V5, "c_H": c_H,
+            "c_H_nodo": nodo["c_H"], "c_HSO4": nodo["c_HSO4"]}
 
 
 # ---- Paso 3: enganche de κ -----------------------------------------------------------
@@ -56,7 +60,8 @@ def factor_kappa(cell, comp):
     """f = κ_Donnan(comp) / κ_Donnan(comp sin vanadio)   (o 1 / constante, según MODO_FACTOR)."""
     if MODO_FACTOR != "donnan":
         return float(MODO_FACTOR)
-    c_s = solucion(comp["c_V4"], comp["c_V5"], comp["c_H"], comp["c_HSO4"])  # SO4 por electroneutralidad
+    # Las cuatro del último nodo del cátodo (estado actual); SO4 por electroneutralidad
+    c_s = solucion(comp["c_V4"], comp["c_V5"], comp["c_H_nodo"], comp["c_HSO4"])
     c_f, T = cell.membrane.c_f, cell.T
     _, c_m  = donnan(c_s, c_f, T)                  # con vanadio
     _, c_m0 = donnan(sin_vanadio(c_s), c_f, T)     # sin vanadio (SO4 recalculado)
@@ -73,7 +78,8 @@ class CeldaDonnan(Cell):
     def update_kappa_io_cathode(self, y_cathode):
         super().update_kappa_io_cathode(y_cathode)
         n = self.layout.n_vars_cathode
-        self._c_HSO4_cara = float(y_cathode[-n + 3])     # HSO4- del último nodo del cátodo [mol/m3]
+        self._nodo_cara = {"c_H":    float(y_cathode[-n + 2]),    # último nodo del cátodo [mol/m3]
+                           "c_HSO4": float(y_cathode[-n + 3])}
 
     def update_kappa_io_m(self, lambda_w, Phi_io_membrane):
         super().update_kappa_io_m(lambda_w, Phi_io_membrane)        # κ(λ) original [S/m]
@@ -102,7 +108,8 @@ def correr(soc, modo=1.0, t_final=300.0):
 def imprimir(r, tag=""):
     print(f"{tag}SOC={r['soc']:.2f}: V={r['V']:.4f} V  ΔΦ_m={r['dphi_m']*1e3:.2f} mV  "
           f"κ_m medio={r['kappa_m']:.3f} S/m  f={r['f']:.4f}  i_io={r['i_io']:.2f} A/m2  "
-          f"cara: c_V4={r['c_V4']:.0f} c_V5={r['c_V5']:.0f} c_H={r['c_H']:.0f} c_HSO4={r['c_HSO4']:.0f}")
+          f"cara: c_V4={r['c_V4']:.0f} c_V5={r['c_V5']:.0f} c_H*={r['c_H']:.0f} "
+          f"c_H,nodo={r['c_H_nodo']:.0f} c_HSO4={r['c_HSO4']:.0f}")
 
 
 # ---- Paso 1 (factor = 1): reproduce la tabla base ------------------------------------
